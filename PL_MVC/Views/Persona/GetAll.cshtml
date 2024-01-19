@@ -1,0 +1,60 @@
+﻿@model ML.Persona
+@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <h2>Personas</h2>
+    </div>
+    <hr />
+    <div class="row">
+        <div style="float:right">
+            @Html.ActionLink("Agregar", "Form", "Persona", htmlAttributes: new { @class = "btn btn-success" })
+        </div>
+    </div>
+
+    <div class="row">
+        @if (Model.Personas != null)
+        {
+            <table class="table table-bordered table-responsive">
+                <thead>
+                    <tr>
+                        <td class="text-center" style=" font-weight:bold;">Editar</td>
+
+                        <td style="display: none;">IdPersona</td>
+                        <td class="text-center" style=" font-weight:bold;">Nombre</td>
+                        <td class="text-center" style=" font-weight:bold;">Apellido Paterno</td>
+                        <td class="text-center" style=" font-weight:bold;">Apellido Materno</td>
+
+                        <td class="text-center" style=" font-weight:bold;">Eliminar</td>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (ML.Persona persona in Model.Personas)
+                    {
+                        <tr>
+                            <td class="text-center"><a class="btn btn-warning" href="@Url.Action("Form", "Persona", new { IdPersona = persona.IdPersona })"><i class="fa-solid fa-pen-to-square"></i></a></td>
+
+                            <td style="display: none;">@persona.IdPersona</td>
+                            <td>@persona.Nombre</td>
+                            <td>@persona.ApellidoPaterno</td>
+                            <td>@persona.ApellidoMaterno</td>
+
+                            <td class="text-center"><a class="btn btn-danger" href="@Url.Action("Delete", "Persona", new { IdPersona = persona.IdPersona })" onclick="return confirm('Estas seguro que deseas inactivar este registro?');"><i class="fa-solid fa-eraser"></i></a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+
+        }
+        else
+        {
+            <div class="alert alert-danger" role="alert">Ocurrio un error al realizar la consulta </div>
+        }
+    </div>
+</div>
+
